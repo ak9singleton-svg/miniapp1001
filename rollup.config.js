@@ -1,10 +1,12 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
-// ИСПРАВЛЕНИЕ: Импортируем terser как экспорт по умолчанию (без фигурных скобок)
 import terser from '@rollup/plugin-terser'; 
 
 const extensions = ['.js', '.jsx'];
+
+// 🟢 НОВОЕ: Определяем внешние зависимости, которые Rollup должен игнорировать
+const externalDependencies = ['react', 'react-dom'];
 
 export default [
     // Конфигурация для клиентской части
@@ -16,6 +18,7 @@ export default [
             name: 'clientBundle',
             sourcemap: false
         },
+        external: externalDependencies, // 🟢 НОВОЕ: Игнорировать React/ReactDOM
         plugins: [
             resolve({ extensions }),
             commonjs(),
@@ -24,7 +27,6 @@ export default [
                 babelHelpers: 'bundled',
                 presets: ['@babel/preset-env', '@babel/preset-react']
             }),
-            // Вызов плагина остается прежним
             terser({ compress: { drop_console: false } }) 
         ]
     },
@@ -37,6 +39,7 @@ export default [
             name: 'adminBundle',
             sourcemap: false
         },
+        external: externalDependencies, // 🟢 НОВОЕ: Игнорировать React/ReactDOM
         plugins: [
             resolve({ extensions }),
             commonjs(),
@@ -45,7 +48,6 @@ export default [
                 babelHelpers: 'bundled',
                 presets: ['@babel/preset-env', '@babel/preset-react']
             }),
-            // Вызов плагина остается прежним
             terser({ compress: { drop_console: false } }) 
         ]
     }
