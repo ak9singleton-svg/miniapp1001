@@ -5,8 +5,13 @@ import terser from '@rollup/plugin-terser';
 
 const extensions = ['.js', '.jsx'];
 
-// 🟢 НОВОЕ: Определяем внешние зависимости, которые Rollup должен игнорировать
 const externalDependencies = ['react', 'react-dom'];
+
+// 🟢 НОВОЕ: Карта глобальных имен для внешних зависимостей
+const globals = {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+};
 
 export default [
     // Конфигурация для клиентской части
@@ -16,9 +21,10 @@ export default [
             file: 'public/js/client.js',
             format: 'iife',
             name: 'clientBundle',
-            sourcemap: false
+            sourcemap: false,
+            globals: globals // 🟢 ДОБАВЛЕНО
         },
-        external: externalDependencies, // 🟢 НОВОЕ: Игнорировать React/ReactDOM
+        external: externalDependencies, 
         plugins: [
             resolve({ extensions }),
             commonjs(),
@@ -37,9 +43,10 @@ export default [
             file: 'public/js/admin.js',
             format: 'iife',
             name: 'adminBundle',
-            sourcemap: false
+            sourcemap: false,
+            globals: globals // 🟢 ДОБАВЛЕНО
         },
-        external: externalDependencies, // 🟢 НОВОЕ: Игнорировать React/ReactDOM
+        external: externalDependencies, 
         plugins: [
             resolve({ extensions }),
             commonjs(),
