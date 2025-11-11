@@ -920,7 +920,7 @@ app.get('/health', (req, res) => {
 async function setupWebhookOnStartup() {
   try {
     // Получаем текущий URL где запущен сервер
-    const webhookUrl = `https://telegram-miniapp-fd6b.onrender.com/webhook`;
+    const webhookUrl = `https://miniapp1001.onrender.com/webhook`;
     
     // Проверяем текущий webhook
     const checkResponse = await axios.get(
