@@ -7,10 +7,12 @@ const extensions = ['.js', '.jsx'];
 
 const externalDependencies = ['react', 'react-dom'];
 
-// 🟢 НОВОЕ: Карта глобальных имен для внешних зависимостей
+// 🟢 КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Карта глобальных имен для внешних зависимостей
 const globals = {
+    // Говорим Rollup, что импорт 'react' должен ссылаться на глобальную 'React'
     'react': 'React',
-    'react-dom': 'ReactDOM'
+    // Говорим Rollup, что импорт 'react-dom' должен ссылаться на глобальную 'ReactDOM'
+    'react-dom': 'ReactDOM' 
 };
 
 export default [
@@ -22,7 +24,7 @@ export default [
             format: 'iife',
             name: 'clientBundle',
             sourcemap: false,
-            globals: globals // 🟢 ДОБАВЛЕНО
+            globals: globals // <-- ОБЯЗАТЕЛЬНОЕ ДОПОЛНЕНИЕ!
         },
         external: externalDependencies, 
         plugins: [
@@ -44,7 +46,7 @@ export default [
             format: 'iife',
             name: 'adminBundle',
             sourcemap: false,
-            globals: globals // 🟢 ДОБАВЛЕНО
+            globals: globals // <-- ОБЯЗАТЕЛЬНОЕ ДОПОЛНЕНИЕ!
         },
         external: externalDependencies, 
         plugins: [
